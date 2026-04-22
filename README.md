@@ -72,6 +72,29 @@ dotnet test .\SimpleATMController.Tests\SimpleATMController.Tests.csproj
 - 세션 종료 처리
 - 전체 사용자 흐름 검증
 
+## 테스트 코드 위치
+
+테스트 코드는 아래 경로에 포함되어 있습니다.
+
+- `SimpleATMController.Tests/ATMControllerTests.cs`
+- `SimpleATMController.Tests/Mocks/MockBankSystem.cs`
+- `SimpleATMController.Tests/Mocks/MockCardReader.cs`
+- `SimpleATMController.Tests/Mocks/MockCashBin.cs`
+
+## 테스트 케이스 예시
+
+- `InsertCard_ShouldSetCardInSession`
+- `EnterPin_WithCorrectPin_ShouldAuthenticate`
+- `EnterPin_WithIncorrectPin_ShouldThrowInvalidPinException`
+- `GetAvailableAccounts_AfterAuthentication_ShouldReturnAccounts`
+- `SelectAccount_WithValidAccount_ShouldSetSelectedAccount`
+- `GetBalance_AfterSelectingAccount_ShouldReturnCorrectBalance`
+- `Deposit_WithValidAmount_ShouldIncreaseBalance`
+- `Withdraw_WithValidAmount_ShouldDecreaseBalance`
+- `Withdraw_WithInsufficientFunds_ShouldThrowInsufficientFundsException`
+- `Withdraw_WithInsufficientCash_ShouldThrowInsufficientCashException`
+- `CompleteFlow_InsertCardToPinToAccountToBalance_ShouldWork`
+
 ## 참고
 
 이 프로젝트는 콘솔 UI, 웹 API, DB 연동 없이 순수한 컨트롤러 로직과 테스트에 집중합니다. 다른 엔지니어가 이 코드를 기반으로 콘솔, 데스크톱, 웹, 모바일 UI를 연결할 수 있도록 구성했습니다.
@@ -83,3 +106,114 @@ dotnet test .\SimpleATMController.Tests\SimpleATMController.Tests.csproj
 - 테스트 코드 포함
 - `dotnet build .\SimpleATMController\SimpleATMController.csproj` 성공
 - `dotnet test .\SimpleATMController.Tests\SimpleATMController.Tests.csproj` 성공
+
+---
+
+# SimpleATMController
+
+This project is a simple ATM controller example. It does not include any graphical or console UI. Instead, it focuses on implementing the core flow from card insertion to PIN verification, account selection, balance inquiry, deposit, and withdrawal.
+
+## Project Structure
+
+- `SimpleATMController`
+  - ATM domain models
+  - Interfaces for external integrations
+  - `ATMController` containing the core business logic
+- `SimpleATMController.Tests`
+  - Unit tests for the controller
+  - Mock implementations for the bank system, card reader, and cash hardware
+
+## Main Flow
+
+The following flow is implemented:
+
+1. Insert card
+2. Enter PIN
+3. Select account
+4. Check balance
+5. Deposit or withdraw
+
+## Design Intent
+
+This project does not implement a real bank system or ATM hardware. Instead, the following interfaces are used to separate the controller from external dependencies:
+
+- `IBankSystem`
+- `ICardReader`
+- `ICashBin`
+
+This makes it possible to keep the `ATMController` testable even when real integrations are added later.
+
+## Development Environment
+
+- .NET 10 SDK
+- xUnit
+
+## Clone the Repository
+
+```powershell
+git clone <repository-url>
+cd SimpleATMController
+```
+
+## Build
+
+```powershell
+dotnet build .\SimpleATMController\SimpleATMController.csproj
+```
+
+## Run Tests
+
+```powershell
+dotnet test .\SimpleATMController.Tests\SimpleATMController.Tests.csproj
+```
+
+## Test Coverage
+
+The test suite includes the following scenarios:
+
+- Card insertion
+- Valid PIN / invalid PIN handling
+- Retrieving available accounts after authentication
+- Account selection
+- Balance inquiry
+- Deposit
+- Withdrawal
+- Insufficient account balance handling
+- Insufficient ATM cash handling
+- Session termination
+- End-to-end flow validation
+
+## Test Code Location
+
+The test code is included in the following files:
+
+- `SimpleATMController.Tests/ATMControllerTests.cs`
+- `SimpleATMController.Tests/Mocks/MockBankSystem.cs`
+- `SimpleATMController.Tests/Mocks/MockCardReader.cs`
+- `SimpleATMController.Tests/Mocks/MockCashBin.cs`
+
+## Example Test Cases
+
+- `InsertCard_ShouldSetCardInSession`
+- `EnterPin_WithCorrectPin_ShouldAuthenticate`
+- `EnterPin_WithIncorrectPin_ShouldThrowInvalidPinException`
+- `GetAvailableAccounts_AfterAuthentication_ShouldReturnAccounts`
+- `SelectAccount_WithValidAccount_ShouldSetSelectedAccount`
+- `GetBalance_AfterSelectingAccount_ShouldReturnCorrectBalance`
+- `Deposit_WithValidAmount_ShouldIncreaseBalance`
+- `Withdraw_WithValidAmount_ShouldDecreaseBalance`
+- `Withdraw_WithInsufficientFunds_ShouldThrowInsufficientFundsException`
+- `Withdraw_WithInsufficientCash_ShouldThrowInsufficientCashException`
+- `CompleteFlow_InsertCardToPinToAccountToBalance_ShouldWork`
+
+## Notes
+
+This project focuses on the controller logic and unit tests only. It does not include a console UI, web API, or database integration. The code is structured so that another engineer can build a console, desktop, web, or mobile UI on top of it.
+
+## Submission Checklist
+
+- Root `README.md` included
+- Controller implementation included
+- Test code included
+- `dotnet build .\SimpleATMController\SimpleATMController.csproj` succeeds
+- `dotnet test .\SimpleATMController.Tests\SimpleATMController.Tests.csproj` succeeds
