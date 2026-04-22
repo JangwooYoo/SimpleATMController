@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SimpleATMController.Tests/SimpleATMController.Tests.csproj" />
+  <Project Path="SimpleATMController/SimpleATMController.csproj" />
+</Solution>
